@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:hystrix="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://code.alibabatech.com/schema/dubbo
+  http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <dubbo:consumer timeout="60000" check="false" filter="hystrix"/>
+    <!--提供方应用信息，用于计算依赖关系-->
+    <dubbo:application name="dubbo_provider"/>
+
+    <!--使用zookeeper注册中心暴露服务地址-->
+    <dubbo:registry address="zookeeper://10.255.223.112:2881"/>
+
+    <!--用dubbo协议在20880端口暴露服务-->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!-- 扫描注解包路径，多个包用逗号分隔，不填package表示扫描当前ApplicationContext中的所有类 -->
+    <dubbo:annotation package="com.dangdang"/>
+
+</beans>
